@@ -1,14 +1,17 @@
 import {Button, Flex, Input, Text} from "@chakra-ui/react";
 import {useState} from "react";
 import {useSetRecoilState} from "recoil";
-import {authModalState} from "../../../atoms/authModalAtom";
+import {authModalState, ModalView} from "../../../atoms/authModalAtom";
 import {auth} from "../../../firebase/clientApp";
+import {FIREBASE_ERRORS} from "../../../firebase/errors";
 import {useCreateUserWithEmailAndPassword} from "react-firebase-hooks/auth";
 
-type SignUpProps = {};
+type SignUpProps = {
+	toggleView: (view: ModalView) => void;
+};
 
-const SignUp: React.FC<SignUpProps> = () => {
-	const setAuthMdalState = useSetRecoilState(authModalState);
+const SignUp: React.FC<SignUpProps> = ({toggleView}) => {
+	const setAuthModalState = useSetRecoilState(authModalState);
 	const [signUpForm, setSignUpForm] = useState({email: "", password: "", confirmPassword: ""});
 	const [formError, setFormError] = useState("");
 	const [createUserWithEmailAndPassword, user, loading, userError] =
@@ -77,27 +80,21 @@ const SignUp: React.FC<SignUpProps> = () => {
 				required
 			/>
 
-			{formError && (
-				<Text textAlign={"center"} color="red" fontSize={"10pt"}>
-					{formError}
-				</Text>
-			)}
+			<Text textAlign={"center"} color="red" fontSize={"10pt"}>
+				{formError || FIREBASE_ERRORS[userError?.message as keyof typeof FIREBASE_ERRORS]}
+			</Text>
 
-			<Button type="submit" width="100%" height="36px" mt={2} mb={2}>
+			<Button type="submit" width="100%" height="36px" mt={2} mb={2} isLoading={loading}>
 				Sign Up
 			</Button>
+
 			<Flex fontSize="9pt" justifyContent={"center"}>
 				<Text mr={1}>Already a redditor?</Text>
 				<Text
 					color="blue.500"
 					fontWeight={700}
 					cursor="pointer"
-					onClick={() => {
-						setAuthMdalState((prev) => ({
-							...prev,
-							view: "login",
-						}));
-					}}
+					onClick={() => toggleView("login")}
 				>
 					LOGIN
 				</Text>
