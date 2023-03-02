@@ -8,7 +8,7 @@ import {useSetRecoilState} from "recoil";
 
 type ResetPasswordProps = {
 	toggleView: (view: ModalView) => void;
-}; 
+};
 
 const ResetPassword: React.FC<ResetPasswordProps> = ({toggleView}) => {
 	const setAuthModalState = useSetRecoilState(authModalState);
@@ -68,16 +68,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({toggleView}) => {
 				</>
 			)}
 			<Flex alignItems="center" fontSize="9pt" color="blue.500" fontWeight={700} cursor="pointer">
-				<Text
-					onClick={() =>
-						setAuthModalState((prev) => ({
-							...prev,
-							view: "login",
-						}))
-					}
-				>
-					LOGIN
-				</Text>
+				<Text onClick={() => toggleView("login")}>LOGIN</Text>
 				<Icon as={BsDot} />
 				<Text
 					onClick={() =>
