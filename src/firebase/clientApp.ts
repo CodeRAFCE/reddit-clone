@@ -20,7 +20,6 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase for SSR
-// const app = initializeApp(firebaseConfig);
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const firestore = getFirestore(app);

@@ -16,3 +16,4 @@ export const authModalState = atom<AuthModalState>({
 	key: "authModalState", // Identifier
 	default: defaultModalState, // Initial State
 });
+ 

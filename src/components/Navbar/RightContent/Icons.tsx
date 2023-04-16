@@ -13,7 +13,7 @@ const Icons: React.FC = () => {
 				borderRight="1px solid"
 				borderColor="gray.200"
 			>
-				icons
+				icons 
 			</Flex>
 			<></>
 		</Flex>
